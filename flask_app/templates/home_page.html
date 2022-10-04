@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Stock$$$$$</title>
+</head>
+<body>
+    <div class="container">
+        <div class="navBar">
+
+            <h1>Stock$$$$$</h1>
+            <span>Welcome to Stock$$$$$.  World's best webpage for stocks and stock analysis</span>
+            <div class="login">
+                <!-- ---------------------Login (Comparing Upon Login (step 1 of 3) --------------------->
+                <form action="/login" method="post" class="col-4 p-4 bg-dark text-light">
+                    <!----------------------- Validation  (step 1 of 3)------------------------------>
+                    <!-- validation needs to be in the form or it will display on the side of the html page -->
+                    {% with messages = get_flashed_messages(category_filter=["login"]) %} 
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p>{{message    }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <h1 class="text-success">Login</h1>
+                    <div class="form-group">
+                        <label>Email: <input type="email" name="email" class="form-control"></label><br>
+                        <label>Password: <input type="password" name="password" class="form-control"></label><br>
+                    </div>
+                    <input type="submit" value="Login" class="btn btn-success">
+                </form>
+                <div class="regBox">
+                    <h3>New to Stock$$$$$</h3>
+                    <a href="/registration">Register Here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
