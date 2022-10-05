@@ -14,19 +14,3 @@ myForm.onsubmit = function(e){
 }
 
 
-// encodedParams.append("symbol", "AAPL");
-
-// const options = {
-// 	method: 'POST',
-// 	headers: {
-// 		'content-type': 'application/x-www-form-urlencoded',
-// 		'X-RapidAPI-Key': 'API KEy',
-// 		'X-RapidAPI-Host': 'yahoo-finance97.p.rapidapi.com'
-// 	},
-// 	body: encodedParams
-// };
-
-// fetch('https://yahoo-finance97.p.rapidapi.com/stock-info', options)
-// 	.then(response => response.json())
-// 	.then(response => console.log(response))
-// 	.catch(err => console.error(err));
