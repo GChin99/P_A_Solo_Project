@@ -1,6 +1,7 @@
 from flask_app import app
 from flask import Flask, render_template, redirect, request, session
 from flask_app.models.user import User 
+from flask_app.models.watchlist import Watchlist
 # We need to import the requests package that we downloaded (pipenv install requests)
 import requests
 import time
@@ -23,7 +24,7 @@ def dashboard():
     data = {
         "id": session["user_id"]
     }
-    return render_template("dashboard.html", logged_in_user = User.get_by_id(data)) #passing in (data) which is our session user id to our class method
+    return render_template("dashboard.html", logged_in_user = User.get_by_id(data), all_watchlist = Watchlist.get_all_watchlist_with_user()) #passing in (data) which is our session user id to our class method
 
 
 # Raid API code 

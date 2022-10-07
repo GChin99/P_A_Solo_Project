@@ -8,13 +8,13 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <!-- ------------------------Read one (step 1 of 3)------------------------------- -->
+    <!-- ------------------------Read one------------------------------- -->
     <!-- logged_in_user comes from the controller/route, .first_name comes from the class method constructor  -->
     <h1 class="text-center">Welcome {{logged_in_user.first_name}} {{logged_in_user.last_name}}</h1>
 
-    <!------------------Logout (step 1 of 2)----------------- -->
+    <!------------------Logout----------------- -->
     <a href="/logout" class="btn btn-info">Logout</a>
-    <a href="/watchlist" class="btn btn-info">Create a Watchlist</a>
+
 
 
     <!-- For the stock API, so we can choose the stock ticker  -->
@@ -30,6 +30,33 @@
     <div id="main">
         
     </div>
+    <table class="table">
+        <h1>Watchlist</h1>
+        <a href="/watchlist" class="btn btn-info">Create a Watchlist</a>
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Protfolio</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for watchlist in all_watchlist %}
+            <td><a href="/watchlist/{{watchlist.id}}">{{watchlist.name}}</a></td>
+            <td>{{watchlist.category}}</td>
+            <td>{{watchlist.portfolio}}</td>
+            <td>
+            <!-- -- ------ update--------------------------->
+                <a href="/edit_watchlist/{{watchlist.id}}"><button>Edit Watchlist</button></a>
+            <!--------------Delete------------------- -->
+                <form action="/delete_watchlist/{{watchlist.id}}" method="post">
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
+            {% endfor%}
+        </tbody>
+    </table>
     <script type="text/javascript" src="{{ url_for('static', filename='my_script.js') }}"></script>
 </body>
 </html>
