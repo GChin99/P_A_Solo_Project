@@ -8,6 +8,8 @@ from flask_app.models.watchlist import Watchlist
 #----------------------------- Create --------------------------- --
 @app.route("/watchlist")
 def make_a_watchlist():
+    if "user_id" not in session:
+        return redirect("/") 
     return render_template("create_watchlist.html")
 
 @app.route("/create_watchlist", methods = ["POST"])
@@ -38,6 +40,8 @@ def delete_watchlist(id):
 # ---------------------Read one recipe (step 2 of 3)-----------------------
 @app.route("/watchlist/<int:id>") 
 def view_watchlist(id):
+    if "user_id" not in session:
+        return redirect("/") 
     data = {
         "id": id 
     }
@@ -50,6 +54,8 @@ def view_watchlist(id):
 # -- -- ------ update --------------------------->
 @app.route("/edit_watchlist/<int:id>")
 def edit_watchlist(id):
+    if "user_id" not in session:
+        return redirect("/") 
     data = {
         "id": id
     }
