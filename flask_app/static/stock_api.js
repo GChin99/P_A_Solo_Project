@@ -107,6 +107,12 @@ myForm.onsubmit = function(e){
             var exchangeInput = document.createElement('input')
             var button = document.createElement('button')
             var submit = document.createTextNode('Save Stock to Watchlist')
+            // var selectInput = document.createElement('select')
+            // var watchlist =document.querySelectorAll('.watchlist')
+            var watchlistID = document.querySelector(".wOption")
+            console.log(watchlistID)
+            var value = watchlistID.options[watchlistID.selectedIndex].value
+            var watchlistInput = document.createElement('input')
             button.appendChild(submit)
 
             // Create form attributes
@@ -124,12 +130,24 @@ myForm.onsubmit = function(e){
             exchangesrc = `${data.exchange}`
             exchangeInput.setAttribute('name', 'exchange')
             exchangeInput.setAttribute('value', exchangesrc)
+            watchlistInput.setAttribute('name', 'watchlist_id')
+            watchlistInput.setAttribute('value', value)
+            watchlistInput.setAttribute('type', 'hidden')
+            console.log(watchlistInput)
+            console.log(form)
+            // for (var i=0; i<watchlist.length; i++){
+            //     var option = document.createElement('option')
+            //     option.value = watchlist[i]
+            //     option.text = watchlist[i]
+            //     selectInput.append(option)
+            // }
 
 
             // Append form attributes to the form
             form.appendChild(nameInput)
             form.appendChild(symbolInput)
             form.appendChild(exchangeInput)
+            form.appendChild(watchlistInput)
             form.appendChild(button)
 
             h2.appendChild(name)
