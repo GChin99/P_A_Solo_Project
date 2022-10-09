@@ -105,20 +105,13 @@ myForm.onsubmit = function(e){
             var nameInput = document.createElement('input')
             var symbolInput = document.createElement('input')
             var exchangeInput = document.createElement('input')
-            var datetimeInput = document.createElement('input')
-            var volumeInput = document.createElement('input')
-            var openInput = document.createElement('input')
-            var highInput = document.createElement('input')
-            var lowInput = document.createElement('input')
-            var closeInput = document.createElement('input')
-            var changeInput = document.createElement('input')
             var button = document.createElement('button')
             var submit = document.createTextNode('Save Stock to Watchlist')
             button.appendChild(submit)
 
             // Create form attributes
             form.setAttribute('method', 'post')
-            form.setAttribute('action', '/images/create/')
+            form.setAttribute('action', '/stock/save/')
             nameInput.setAttribute('type', 'hidden')
             namesrc = `${data.name}`
             nameInput.setAttribute('name', 'name')
@@ -131,46 +124,12 @@ myForm.onsubmit = function(e){
             exchangesrc = `${data.exchange}`
             exchangeInput.setAttribute('name', 'exchange')
             exchangeInput.setAttribute('value', exchangesrc)
-            datetimeInput.setAttribute('type', 'hidden')
-            datetimesrc = `${data.datetime}`
-            datetimeInput.setAttribute('name', 'datetime')
-            datetimeInput.setAttribute('value', datetimesrc)
-            volumeInput.setAttribute('type', 'hidden')
-            volumesrc = `${data.volume}`
-            volumeInput.setAttribute('name', 'volume')
-            volumeInput.setAttribute('value', volumesrc)
-            openInput.setAttribute('type', 'hidden')
-            opensrc = `${data.open}`
-            openInput.setAttribute('name', 'open')
-            openInput.setAttribute('value', opensrc)
-            highInput.setAttribute('type', 'hidden')
-            highsrc = `${data.high}`
-            highInput.setAttribute('name', 'high')
-            highInput.setAttribute('value', highsrc)
-            lowInput.setAttribute('type', 'hidden')
-            lowsrc = `${data.low}`
-            lowInput.setAttribute('name', 'low')
-            lowInput.setAttribute('value', lowsrc)
-            closeInput.setAttribute('type', 'hidden')
-            closesrc = `${data.close}`
-            closeInput.setAttribute('name', 'close')
-            closeInput.setAttribute('value', closesrc)
-            changeInput.setAttribute('type', 'hidden')
-            changesrc = `${data.change}`
-            changeInput.setAttribute('name', 'change')
-            changeInput.setAttribute('value', changesrc)
+
 
             // Append form attributes to the form
             form.appendChild(nameInput)
             form.appendChild(symbolInput)
             form.appendChild(exchangeInput)
-            form.appendChild(datetimeInput)
-            form.appendChild(volumeInput)
-            form.appendChild(openInput)
-            form.appendChild(highInput)
-            form.appendChild(lowInput)
-            form.appendChild(closeInput)
-            form.appendChild(changeInput)
             form.appendChild(button)
 
             h2.appendChild(name)
@@ -179,8 +138,30 @@ myForm.onsubmit = function(e){
             node.appendChild(form)
             // Appened table to the HTML template (ID = stock)
             document.getElementById('stock').appendChild(node)
+            document.getElementById("stock").value = ""
+
     })
 }
+
+
+
+function getWatchlist(){
+    fetch('http://localhost:5000/watchlists/json')
+        .then(res =>  res.json())
+        .then(data => {
+            var watchlists = document.getElementById('stocks');
+            for( let i = 0; i < data.length; i++){
+                let select = document.createElement('select');
+
+
+            }
+        })
+
+}
+getWatchlist();
+
+
+
 
 
             // FIrst API attempt (works but does not look good)

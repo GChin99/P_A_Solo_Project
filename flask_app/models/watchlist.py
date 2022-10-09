@@ -93,6 +93,17 @@ class Watchlist:
         return results
 
 
+# JS likes to use the most raw data as possible.  We are not making any instances
+# We are just getting the data from the database and putting it into a list of watchlist
+    @classmethod
+    def get_all_json(cls):
+        query = "SELECT * FROM watchlists;"
+        results = connectToMySQL(cls.db).query_db(query)
+        # when using a select query it always comes back as a list of dictionaries 
+        watchlists = []
+        for watchlist_data in results:
+            watchlists.append( watchlist_data )
+        return watchlists
 
 
 # --------------------validation ---------------------------------

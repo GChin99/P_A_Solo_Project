@@ -1,6 +1,7 @@
 from flask_app import app
 from flask import Flask, render_template, redirect, request, session
 from flask_app.models.user import User 
+from flask_app.models.stock import Stock 
 from flask_app.models.watchlist import Watchlist
 # We need to import the requests package that we downloaded (pipenv install requests)
 import requests
@@ -27,6 +28,43 @@ def dashboard():
     return render_template("dashboard.html", logged_in_user = User.get_by_id(data), all_watchlist = Watchlist.get_all_watchlist_with_user()) #passing in (data) which is our session user id to our class method
 
 
+# Twelvedata.com API
+@app.route('/stock_data', methods=["POST"])
+def get_stock_price():
+    url = f"https://api.twelvedata.com/quote?symbol={request.form['ticker']}&apikey={Twelvedata_API_KEY}"
+    response = requests.get(url)
+    print(response)
+    return jsonify (response.json())
+
+# URL for:
+# company profile: https://api.twelvedata.com/profile?symbol=AAPL&apikey=demo
+# compnay dividens:https://api.twelvedata.com/dividends?symbol=AAPL&apikey=demo
+# SMA:https://api.twelvedata.com/sma?symbol=AAPL&interval=1min&apikey=demo
+# RSI:https://api.twelvedata.com/rsi?symbol=AAPL&interval=1min&apikey=demo
+# MACD:https://api.twelvedata.com/macd?symbol=AAPL&interval=1min&apikey=demo
+
+
+@app.route('/stock/save/', methods=['post'])
+def createImage():
+    data = {
+        'name': request.form['name'],
+        'symbol': request.form['symbol'],
+        'exchange': request.form['exchange'],
+        'user_id': session['user_id'],
+        'watchlist_id':request.form['watchlist_id']
+    }
+    Stock.save(data)
+    return redirect('/dashboard')
+
+
+
+
+
+
+
+
+
+
 # Raid API code 
 # url = "https://yahoo-finance97.p.rapidapi.com/stock-info"
 
@@ -49,17 +87,3 @@ def dashboard():
 #         return jsonify( response.json() )
 
 
-
-@app.route('/stock_data', methods=["POST"])
-def get_stock_price():
-    url = f"https://api.twelvedata.com/quote?symbol={request.form['ticker']}&apikey={Twelvedata_API_KEY}"
-    response = requests.get(url)
-    print(response)
-    return jsonify (response.json())
-
-# URL for:
-# company profile: https://api.twelvedata.com/profile?symbol=AAPL&apikey=demo
-# compnay dividens:https://api.twelvedata.com/dividends?symbol=AAPL&apikey=demo
-# SMA:https://api.twelvedata.com/sma?symbol=AAPL&interval=1min&apikey=demo
-# RSI:https://api.twelvedata.com/rsi?symbol=AAPL&interval=1min&apikey=demo
-# MACD:https://api.twelvedata.com/macd?symbol=AAPL&interval=1min&apikey=demo
