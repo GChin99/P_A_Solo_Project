@@ -51,7 +51,7 @@ def createImage():
         'symbol': request.form['symbol'],
         'exchange': request.form['exchange'],
         'user_id': session['user_id'],
-        'watchlist_id':request.form['watchlist_id']
+        'watchlist_id':int(request.form['watchlist_id'])
     }
     Stock.save(data)
     return redirect('/dashboard')

@@ -21,21 +21,20 @@
     <!-- For the stock API, so we can choose the stock ticker  -->
     <!-- Now when we are using forms we no longer have a action (redirect to new route),
         JavaScript is going out to get what we need -->
+        <h3>Choose Your Watchlist</h3>
+        <select class="wOption" name="watchlist">
+        {% for watchlist in all_watchlist %}
+            <option  value="{{watchlist.id}}">{{watchlist.name}}</option>
+        {% endfor %}
+        </select>
         <form  id="myForm" method="post">
             <label for="ticker">Stock Ticker: </label>
             <input type="text" name="ticker">
             <input type="submit" id="submit_btn" value="Submit">
-            <!-- When we hit submit button with the specific id="myForm", we want the JavaScript to look for it and then hand off the data to the python file -->
-            <!-- Steps 1. html form -> 2. JavaScript-> 3. python Controller ->4. JavaScript -> 5. Html Form-->
         </form>
     <div id="stock">
         
     </div>
-    <select class="wOption" name="watchlist">
-    {% for watchlist in all_watchlist %}
-        <option  value="{{watchlist.id}}">{{watchlist.name}}</option>
-    {% endfor %}
-    </select>
     <table class="table">
         <h1>Watchlist</h1>
         <a href="/watchlist" class="btn btn-info">Create a Watchlist</a>
@@ -49,18 +48,20 @@
         </thead>
         <tbody>
             {% for watchlist in all_watchlist %}
-            <span class="watchlist" hidden="hidden">{{watchlist.id}}</span>
-            <td><a href="/watchlist/{{watchlist.id}}">{{watchlist.name}}</a></td>
-            <td>{{watchlist.category}}</td>
-            <td>{{watchlist.portfolio}}</td>
-            <td>
-            <!-- -- ------ update--------------------------->
-                <a href="/edit_watchlist/{{watchlist.id}}"><button>Edit Watchlist</button></a>
-            <!--------------Delete------------------- -->
-                <form action="/delete_watchlist/{{watchlist.id}}" method="post">
-                    <input type="submit" value="Delete">
-                </form>
-            </td>
+            <tr>
+                <!-- <span class="watchlist" hidden="hidden">{{watchlist.id}}</span> -->
+                <td><a href="/watchlist/{{watchlist.id}}">{{watchlist.name}}</a></td>
+                <td>{{watchlist.category}}</td>
+                <td>{{watchlist.portfolio}}</td>
+                <td>
+                <!-- -- ------ update--------------------------->
+                    <a href="/edit_watchlist/{{watchlist.id}}"><button>Edit Watchlist</button></a>
+                <!--------------Delete------------------- -->
+                    <form action="/delete_watchlist/{{watchlist.id}}" method="post">
+                        <input type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
             {% endfor%}
         </tbody>
     </table>

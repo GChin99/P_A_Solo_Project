@@ -107,11 +107,13 @@ myForm.onsubmit = function(e){
             var exchangeInput = document.createElement('input')
             var button = document.createElement('button')
             var submit = document.createTextNode('Save Stock to Watchlist')
-            // var selectInput = document.createElement('select')
-            // var watchlist =document.querySelectorAll('.watchlist')
             var watchlistID = document.querySelector(".wOption")
             console.log(watchlistID)
             var value = watchlistID.options[watchlistID.selectedIndex].value
+            console.log("the value of var value:", value)
+            // var valueInt = parseInt(value)
+            // console.log(valueInt)
+            // console.log(typeof(valueInt ))
             var watchlistInput = document.createElement('input')
             button.appendChild(submit)
 
@@ -130,17 +132,15 @@ myForm.onsubmit = function(e){
             exchangesrc = `${data.exchange}`
             exchangeInput.setAttribute('name', 'exchange')
             exchangeInput.setAttribute('value', exchangesrc)
-            watchlistInput.setAttribute('name', 'watchlist_id')
-            watchlistInput.setAttribute('value', value)
             watchlistInput.setAttribute('type', 'hidden')
-            console.log(watchlistInput)
+            // console.log(typeof value)
+            valuesrc = parseInt(value)
+            console.log("this is valuesrc:", valuesrc)
+            console.log("the type of valuesrc:", typeof(valuesrc ))
+            watchlistInput.setAttribute('name', 'watchlist_id')
+            watchlistInput.setAttribute('value', valuesrc)
+            console.log("wathclistInput is:", watchlistInput)
             console.log(form)
-            // for (var i=0; i<watchlist.length; i++){
-            //     var option = document.createElement('option')
-            //     option.value = watchlist[i]
-            //     option.text = watchlist[i]
-            //     selectInput.append(option)
-            // }
 
 
             // Append form attributes to the form
@@ -154,31 +154,13 @@ myForm.onsubmit = function(e){
             node.appendChild(h2)
             node.appendChild(table)
             node.appendChild(form)
+
             // Appened table to the HTML template (ID = stock)
             document.getElementById('stock').appendChild(node)
             document.getElementById("stock").value = ""
 
     })
 }
-
-
-
-function getWatchlist(){
-    fetch('http://localhost:5000/watchlists/json')
-        .then(res =>  res.json())
-        .then(data => {
-            var watchlists = document.getElementById('stocks');
-            for( let i = 0; i < data.length; i++){
-                let select = document.createElement('select');
-
-
-            }
-        })
-
-}
-getWatchlist();
-
-
 
 
 
