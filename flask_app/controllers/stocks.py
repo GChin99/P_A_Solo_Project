@@ -58,7 +58,18 @@ def createStock():
 
 
 
-
+#---------------------Delete show (step 2 of 3))--------------------------------------
+@app.route("/stock/<int:id>/delete", methods=["POST"])
+def delete_stock(id):
+    print(request.form)
+    # logged in Validation
+    if "user_id" not in session:
+        return redirect("/") 
+    data = {
+        "id": id
+    }
+    Stock.delete_stock(data)
+    return redirect(f"/watchlist/{id}")
 
 
 

@@ -4,17 +4,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Watchlist</title>
 </head>
 <body>
-    <a href="/dashboard"class="btn btn-info">Back to dashboard</a>
-    <a href="/logout" class="btn btn-info">Logout</a>
-    <h1>Watchlist: {{watchlist.name}}</h1>
-    {% for one_stock in watchlist.stocks %} 
-    <p>{{one_stock.name}}</p>
-    <p>{{one_stock.symbol}}</p>
-    <p>{{one_stock.exchange}}</p>
-
-{% endfor %}
+    <div class="navBar">
+        <h1>Watchlist: {{watchlist.name}}</h1>
+        <div class="navButtons">
+            <a href="/dashboard"class="btn btn-info">Back to dashboard</a>
+            <a href="/logout" class="btn btn-info">Logout</a>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Stock Name</th>
+                <th scope="col">Stock Symbol</th>
+                <th scope="col">Exchange</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for one_stock in watchlist.stocks %} 
+            <tr>
+                <td>{{one_stock.name}}</td>
+                <td>{{one_stock.symbol}}</td>
+                <td>{{one_stock.exchange}}</td>
+                <td>
+                    <form action="/stock/{{one_stock.id}}/delete" method="POST">
+                        <input name="id" value="{{one_stock.id}}" type="hidden">
+                        <button type="submit">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

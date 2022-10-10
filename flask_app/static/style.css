@@ -2,10 +2,16 @@
     box-sizing: border-box;
 }
 
-.container{
-    display: flex;
-    flex-direction: column;
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+    .prev, .next,.text {font-size: 11px}
 }
+
+@media screen and (max-width: 768px) {
+    div{
+    float:left;
+    }
+} 
 /* stock data table */
 table{
     border-collapse: collapse;
@@ -15,28 +21,58 @@ th, td{
     padding: 10px 20px;
     border: 1px solid #000;
 }
+/* stock data table */
 
+/* HomePage  */
+.container{
+    display: flex;
+    flex-direction: column;
+    background-color: beige;
+}
+
+.hpNavBar {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+    background-color: #343a40;
+}
 .regBox {
     display: flex;
+    flex-direction: column;
+    background-color: #343a40;
+    color: #28a745;
 }
-
-
-/* On smaller screens, decrease text size */
-@media only screen and (max-width: 300px) {
-    .prev, .next,.text {font-size: 11px}
-}
-
 
 .whyStocks {
     display: flex;
     margin-top: 50px;
 }
 
-img {
-    width: 600px;
-}
 
 .login {
     display: flex;
     align-items: flex-end;
 }
+
+.navBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+/* Homepage */
+
+/* Registration Page */
+.regContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: beige;
+}
+
+.homePage {
+    display: flex;
+    justify-content: space-evenly;
+    width: 600px;
+}
+/* Registration Page */

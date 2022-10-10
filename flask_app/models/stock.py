@@ -23,3 +23,10 @@ class Stock:
                         (name, symbol, exchange, user_id, watchlist_id) 
                     VALUES (%(name)s, %(symbol)s, %(exchange)s, %(user_id)s, %(watchlist_id)s);'''
         return connectToMySQL(cls.db).query_db(query, data)
+
+    @classmethod
+    def delete_stock(cls, data): 
+        query = "DELETE FROM stocks WHERE id = %(id)s;"
+        results = connectToMySQL(cls.db).query_db(query, data)
+        # print(results)
+        # return results
