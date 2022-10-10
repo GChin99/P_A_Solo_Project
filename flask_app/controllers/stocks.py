@@ -45,7 +45,7 @@ def get_stock_price():
 
 
 @app.route('/stock/save/', methods=['post'])
-def createImage():
+def createStock():
     data = {
         'name': request.form['name'],
         'symbol': request.form['symbol'],

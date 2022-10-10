@@ -1,6 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 from flask_app.models import user
+from flask_app.models import stock
 
 class Watchlist:
 
@@ -16,6 +17,7 @@ class Watchlist:
         self.user_id = data["user_id"]
         # ****************Parsing Data into associated Classes **********************
         self.owner = None 
+        self.stocks=[]
 
 # -- ------------------------- Create ---------------------------
     @classmethod
@@ -93,17 +95,29 @@ class Watchlist:
         return results
 
 
-# JS likes to use the most raw data as possible.  We are not making any instances
-# We are just getting the data from the database and putting it into a list of watchlist
+# -----------------------Read  method to JOIN watchlist and stocks (read one)-------------------------------
     @classmethod
-    def get_all_json(cls):
-        query = "SELECT * FROM watchlists;"
-        results = connectToMySQL(cls.db).query_db(query)
-        # when using a select query it always comes back as a list of dictionaries 
-        watchlists = []
-        for watchlist_data in results:
-            watchlists.append( watchlist_data )
-        return watchlists
+    def get_one_with_stocks(cls, data): 
+        query = "SELECT * FROM watchlists JOIN stocks ON watchlists.id = stocks.watchlist_id WHERE watchlists.id = %(id)s"
+        results = connectToMySQL(cls.db).query_db(query, data)
+        print(results)
+        one_watchlist = cls(results[0])
+        for one_stock in results:
+            stock_data = {
+                "id" : one_stock["stocks.id"],
+                "name" :one_stock["stocks.name"],
+                "symbol" : one_stock["symbol"],
+                "exchange": one_stock["exchange"],
+                "user_id": one_stock["user_id"],
+                "watchlist_id":one_stock["watchlist_id"],
+                "created_at": one_stock["stocks.created_at"],
+                "updated_at": one_stock["stocks.updated_at"]
+            }
+            stock_obj = stock.Stock(stock_data) 
+            one_watchlist.stocks.append(stock_obj)
+        return one_watchlist
+
+
 
 
 # --------------------validation ---------------------------------

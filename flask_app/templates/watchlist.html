@@ -10,6 +10,11 @@
     <a href="/dashboard"class="btn btn-info">Back to dashboard</a>
     <a href="/logout" class="btn btn-info">Logout</a>
     <h1>Watchlist: {{watchlist.name}}</h1>
-    
+    {% for one_stock in watchlist.stocks %} 
+    <p>{{one_stock.name}}</p>
+    <p>{{one_stock.symbol}}</p>
+    <p>{{one_stock.exchange}}</p>
+
+{% endfor %}
 </body>
 </html>

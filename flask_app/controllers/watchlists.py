@@ -48,7 +48,7 @@ def view_watchlist(id):
     user_data = {
         "id" : session["user_id"]
     }
-    return render_template("watchlist.html",logged_in_user = User.get_by_id(user_data),  watchlist = Watchlist.get_one_with_user(data))
+    return render_template("watchlist.html",logged_in_user = User.get_by_id(user_data),  watchlist = Watchlist.get_one_with_stocks(data))
 
 
 # -- -- ------ update ---------------------------
@@ -76,7 +76,3 @@ def update_watchlist(id):
     Watchlist.update(data)
     return redirect("/dashboard")
 
-# ------pull data from data base, and return JSON object for JS to use------
-@app.route("/watchlists/json")
-def watchlistJson():
-    return jsonify(Watchlist.get_all_json())
