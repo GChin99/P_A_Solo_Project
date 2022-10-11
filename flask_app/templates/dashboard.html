@@ -9,62 +9,74 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <!-- ------------------------Read one------------------------------- -->
-    <!-- logged_in_user comes from the controller/route, .first_name comes from the class method constructor  -->
-    <h1 class="text-center">Welcome To Stock$ {{logged_in_user.first_name}} {{logged_in_user.last_name}}</h1>
+    <div class="container">
+        <div class="navBar">
+            <!-- ------------------------Read one------------------------------- -->
+            <!-- logged_in_user comes from the controller/route, .first_name comes from the class method constructor  -->
+            <h1 class="text-center">Welcome To Stock$ {{logged_in_user.first_name}} {{logged_in_user.last_name}}</h1>
+            <!------------------Logout----------------- -->
+            <a href="/logout" class="btn btn-info">Logout</a>
+        </div>
+        <!-- For the stock API, so we can choose the stock ticker  -->
+        <!-- Now when we are using forms we no longer have a action (redirect to new route),
+            JavaScript is going out to get what we need -->
+        <div class="createWatchlist">
+            <h3 class="h3Watchlist">Watchlist</h3>
+            <a href="/watchlist" class="btn btn-info">Create a Watchlist</a>
+        </div>
+        <div class="watchlistSelect">
+            <h3>Choose Your Watchlist</h3>
+            <select class="wOption" name="watchlist">
+                {% for watchlist in all_watchlist %}
+                {% if session["user_id"] == watchlist.user_id %}
+                <option  value="{{watchlist.id}}">{{watchlist.name}}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="stockTicker">
+            <form  id="myForm" method="post">
+                <h3><label for="ticker">Stock Ticker: </label></h3>
+                <input class= "formBar" type="text" name="ticker">
+                <input type="submit" id="submit_btn" value="Submit">
+            </form>
+            <div id="stock">
+                <!-- JS is creating the form using the ID stock -->
+            </div>
+        </div>
 
-    <!------------------Logout----------------- -->
-    <a href="/logout" class="btn btn-info">Logout</a>
-
-
-
-    <!-- For the stock API, so we can choose the stock ticker  -->
-    <!-- Now when we are using forms we no longer have a action (redirect to new route),
-        JavaScript is going out to get what we need -->
-        <h3>Choose Your Watchlist</h3>
-        <select class="wOption" name="watchlist">
-        {% for watchlist in all_watchlist %}
-            <option  value="{{watchlist.id}}">{{watchlist.name}}</option>
-        {% endfor %}
-        </select>
-        <form  id="myForm" method="post">
-            <label for="ticker">Stock Ticker: </label>
-            <input type="text" name="ticker">
-            <input type="submit" id="submit_btn" value="Submit">
-        </form>
-    <div id="stock">
-        
+        <table class="table">
+            <h2>{{logged_in_user.first_name}}'s Watchlists</h2>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Protfolio</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for watchlist in all_watchlist %}
+                {% if session["user_id"] == watchlist.user_id %}
+                <tr>
+                    <!-- <span class="watchlist" hidden="hidden">{{watchlist.id}}</span> -->
+                    <td><a href="/watchlist/{{watchlist.id}}">{{watchlist.name}}</a></td>
+                    <td>{{watchlist.category}}</td>
+                    <td>{{watchlist.portfolio}}</td>
+                    <td class="actions">
+                    <!-- -- ------ update--------------------------->
+                        <a href="/edit_watchlist/{{watchlist.id}}"><button>Edit Watchlist</button></a>
+                    <!--------------Delete------------------- -->
+                        <form action="/delete_watchlist/{{watchlist.id}}" method="post">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor%}
+            </tbody>
+        </table>
     </div>
-    <table class="table">
-        <h1>Watchlist</h1>
-        <a href="/watchlist" class="btn btn-info">Create a Watchlist</a>
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Category</th>
-                <th scope="col">Protfolio</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for watchlist in all_watchlist %}
-            <tr>
-                <!-- <span class="watchlist" hidden="hidden">{{watchlist.id}}</span> -->
-                <td><a href="/watchlist/{{watchlist.id}}">{{watchlist.name}}</a></td>
-                <td>{{watchlist.category}}</td>
-                <td>{{watchlist.portfolio}}</td>
-                <td>
-                <!-- -- ------ update--------------------------->
-                    <a href="/edit_watchlist/{{watchlist.id}}"><button>Edit Watchlist</button></a>
-                <!--------------Delete------------------- -->
-                    <form action="/delete_watchlist/{{watchlist.id}}" method="post">
-                        <input type="submit" value="Delete">
-                    </form>
-                </td>
-            </tr>
-            {% endfor%}
-        </tbody>
-    </table>
     <script type="text/javascript" src="{{ url_for('static', filename='stock_api.js') }}"></script>
 </body>
 </html>

@@ -17,6 +17,7 @@ table{
     border-collapse: collapse;
     border-spacing: 0;
 }
+
 th, td{
     padding: 10px 20px;
     border: 1px solid #000;
@@ -76,3 +77,45 @@ th, td{
     width: 600px;
 }
 /* Registration Page */
+
+/* dashboard */
+.watchlistSelect {
+    display: flex;
+    margin-top: 25px;
+    /* margin-left: 25px; */
+    /* padding: 25px; */
+}
+
+.wOption {
+    margin-left: 25px;
+}
+
+#myForm {
+    display: flex;
+    margin-top: 25px;
+    align-content: center;
+    align-items: center;
+}
+
+.formBar {
+    margin-left: 25px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.createWatchlist {
+    display: flex;
+    margin-top: 25px;
+
+}
+
+.stockTicker {
+    margin-bottom: 50px;
+}
+
+.h3Watchlist {
+    margin-right: 25px;
+}
